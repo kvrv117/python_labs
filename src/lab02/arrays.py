@@ -1,13 +1,37 @@
-import traceback
+from testing import test
 
 def min_max(nums: list[float | int]):
     if len(nums) == 0:
         raise ValueError
-    return (min(nums), max(nums))
+    
+    mn = nums[0]
+    mx = nums[0]
+    for a in nums:
+        if a < mn:
+            mn = a
+        if a > mx:
+            mx = a
+    return (mn, mx)
 
 def unique_sorted(nums: list[float | int]):
     unique_nums = set(nums)
-    return list(sorted(unique_nums))
+
+    return qsort(list(unique_nums))
+
+def qsort(a):
+    if len(a) < 2:
+        return a
+    elif len(a) == 2:
+        return [min(a), max(a)]
+    m = a[0]
+    mins = []
+    maxs = []
+    for c in a[1:]:
+        if c <= m:
+            mins.append(c)
+        else:
+            maxs.append(c)
+    return qsort(mins) + [m] + qsort(maxs)
 
 def flatten(mat: list[list | tuple]):
     out = []
@@ -17,14 +41,6 @@ def flatten(mat: list[list | tuple]):
         out.extend(a)
     return out
 
-def test(func, cases):
-    for c in cases:
-        out = ''
-        try:
-            out = func(c)
-        except Exception as e:
-            out = traceback.format_exception(e)[-1].strip()
-        print(f'{c} -> {out}')
 
 tests_min_max = [
     [3, -1, 5, 5, 0],
@@ -54,5 +70,5 @@ print()
 print('==UNIQUE SORTED==')
 test(unique_sorted, tests_unique_sorted)
 print()
-print('==Flatten==')
+print('==FLATTEN==')
 test(flatten, tests_flatten)
