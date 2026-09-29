@@ -1,6 +1,10 @@
 from testing import test
 
 def min_max(nums: list[float | int]):
+    '''
+    Возвращает кортеж из максимального и минимального значения
+    '''
+
     if len(nums) == 0:
         raise ValueError
     
@@ -14,6 +18,9 @@ def min_max(nums: list[float | int]):
     return (mn, mx)
 
 def unique_sorted(nums: list[float | int]):
+    '''
+    Возвращает список из отсортированных уникальных значений списка
+    '''
     unique_nums = set(nums)
 
     return qsort(list(unique_nums))
@@ -34,6 +41,9 @@ def qsort(a):
     return qsort(mins) + [m] + qsort(maxs)
 
 def flatten(mat: list[list | tuple]):
+    '''
+    Принимает список списков/кортежей. Возвращает один список из всех их элементов.
+    '''
     out = []
     for a in mat:
         if type(a) not in [list, tuple]:

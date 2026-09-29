@@ -115,7 +115,7 @@ def transpose(mat: list[list[float | int]]):
 ```python
 def row_sums(mat: list[list[float | int]]):
     '''
-    Возвращает суммы рядов матрицы
+    Возвращает суммы рядов матрицы. Требуется прямоугольность
     '''
     if not is_rect(mat):
         raise ValueError
@@ -128,3 +128,24 @@ def row_sums(mat: list[list[float | int]]):
 
     return sums
 ```
+
+![](../../images/lab02/ex02_row_sums.png)
+
+### 3.col_sums
+
+```python
+def col_sums(mat: list[list[float | int]]):
+    '''
+    Возвращает суммы столбцов матрицы. Требуется прямоугольность
+    '''
+    if not is_rect(mat):
+        raise ValueError
+    if len(mat) == 0:
+        return mat
+
+    return row_sums(transpose(mat))
+```
+
+Так как столбцы матрицы - это строки транспонированной матрицы, можно воспользоваться ранее реализованными функциями row_sums и transpose.
+
+![](../../images/lab02/ex02_col_sums.png)
