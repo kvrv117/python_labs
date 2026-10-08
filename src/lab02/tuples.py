@@ -1,6 +1,9 @@
 from testing import test
 
 def format_record(rec: tuple[str, str, float]):
+    '''
+    Форматирует запись об ученике
+    '''
     if type(rec) != tuple:
         raise TypeError("Введен не кортеж")
     if len(rec) != 3:

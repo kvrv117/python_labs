@@ -1,0 +1,7 @@
+pyproject.toml
+src/__init__.py
+src/text.py
+src/text_utils.egg-info/PKG-INFO
+src/text_utils.egg-info/SOURCES.txt
+src/text_utils.egg-info/dependency_links.txt
+src/text_utils.egg-info/top_level.txt
