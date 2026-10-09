@@ -1,7 +1,8 @@
 import argparse
 from collections import Counter
+from pathlib import Path
 
-from text_utils import normalize, tokenize, count_freq, top_n
+from text_utils import normalize, tokenize
 from src.lab04.io_txt_csv import read_text, write_csv
 from src.lab03.text_stats import print_stats
 
@@ -48,10 +49,10 @@ def make_per_file_report(input_files: list[str], output_file: str, encoding: str
     for path in input_files:
         text = read_text(path, encoding)
         freq = frequencies_from_text(text)
-        file = path.split('/')[-1]
+        name = Path(path).name
 
         for word, count in sorted_word_counts(freq):
-            rows.append((file, word, count))
+            rows.append((name, word, count))
 
     rows.sort(key=lambda row: (row[0], -row[2], row[1]))
 
@@ -105,7 +106,6 @@ def main() -> None:
 
     args = parser.parse_args()
 
-    # Режим ★: несколько файлов с отдельным и общим отчётами
     if args.per_file is not None or args.total is not None:
         per_file_path = args.per_file or "data/lab04/report_per_file.csv"
         total_path = args.total or "data/lab04/report_total.csv"

@@ -84,8 +84,85 @@ test,3
 
 ## Задание B
 
+### Аргументы командной строки
 ``` python
+parser = argparse.ArgumentParser(
+        description="Генерация отчёта по частотности слов."
+    )
 
+    parser.add_argument(
+        "--in",
+        dest="input_files",
+        nargs="+",
+        default=["data/lab04/input.txt"],
+        help="Пути к входным TXT-файлам."
+    )
+
+    parser.add_argument(
+        "--out",
+        default="data/lab04/report.csv",
+        help="Путь к общему CSV-отчёту."
+    )
+
+    parser.add_argument(
+        "--encoding",
+        default="utf-8",
+        help="Кодировка входных файлов. По умолчанию UTF-8."
+    )
+
+    parser.add_argument(
+        "--per-file",
+        default=None,
+        help="Путь к отчёту по каждому файлу отдельно."
+    )
+
+    parser.add_argument(
+        "--total",
+        default=None,
+        help="Путь к сводному отчёту."
+    )
+
+    args = parser.parse_args()
+```
+
+### Создание общего отчёта
+
+``` python
+def make_total_report(input_files: list[str], output_file: str, encoding: str) -> None:
+    """
+    Создаёт общий CSV-отчёт по всем входным файлам.
+    """
+    total_freq: Counter[str] = Counter()
+
+    for path in input_files:
+        text = read_text(path, encoding)
+        total_freq.update(tokenize(normalize(text)))
+
+    rows = sorted_word_counts(dict(total_freq))
+
+    write_csv(rows, output_file, header=("word", "count"))
+```
+
+### Создание пер-файл отчёта
+
+```python
+def make_per_file_report(input_files: list[str], output_file: str, encoding: str) -> None:
+    """
+    Создаёт CSV-отчёт с частотами слов отдельно для каждого файла.
+    """
+    rows = []
+
+    for path in input_files:
+        text = read_text(path, encoding)
+        freq = frequencies_from_text(text)
+        name = Path(path).name
+
+        for word, count in sorted_word_counts(freq):
+            rows.append((name, word, count))
+
+    rows.sort(key=lambda row: (row[0], -row[2], row[1]))
+
+    write_csv(rows, output_file, header=("file", "word", "count"))
 ```
 
 ## Тест-кейсы
@@ -138,6 +215,7 @@ word,count
 ### D★. Несколько файлов (пер‑файл и сводный)
 
 Вход:
+
 a.txt
 ```
 Привет мир
