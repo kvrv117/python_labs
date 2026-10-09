@@ -27,7 +27,7 @@ test,3
 ```
 
 Консоль:
-![](../../images/lab03/img02.png)
+![](../../images/lab04/img02.png)
 
 Отчёт (data/lab04/report.csv):
 ```
@@ -41,7 +41,7 @@ word,count
 Вход: пустой файл blank_input.txt
 
 Консоль:
-![](../../images/lab03/img03.png)
+![](../../images/lab04/img03.png)
 
 Отчёт (только заголовок):
 ```
@@ -56,10 +56,40 @@ word,count
 ```
 
 Консоль:
-![](../../images/lab03/img04.png)
+![](../../images/lab04/img04.png)
 
 Отчёт (data/lab04/report.csv):
 ```
 word,count
 привет,1
+```
+
+### D★. Несколько файлов (пер‑файл и сводный)
+
+Вход:
+a.txt
+```
+Привет мир
+```
+b.txt
+```
+Привет, привет!
+```
+
+Консоль:
+![](../../images/lab04/img05.png)
+
+Пер-файл отчёт (data/lab04/report_per_file.csv):
+```
+file,word,count
+a.txt,мир,1
+a.txt,привет,1
+b.txt,привет,2
+```
+
+Сводный отчёт (data/lab04/report_total.csv):
+```
+word,count
+привет,3
+мир,1
 ```
