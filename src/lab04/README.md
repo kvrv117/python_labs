@@ -165,6 +165,8 @@ def make_per_file_report(input_files: list[str], output_file: str, encoding: str
     write_csv(rows, output_file, header=("file", "word", "count"))
 ```
 
+Если input файла не существует в консоле всплываете FileNotFoundError
+
 ## Тест-кейсы
 
 ### A. Один файл (база)
