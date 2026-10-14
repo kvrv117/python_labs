@@ -17,10 +17,10 @@ def csv_to_xlsx(csv_path: str, xlsx_path: str) -> None:
         raise ValueError(f"Ожидался XLSX-файл: {target}")
 
     with source.open("r", newline="", encoding="utf-8") as file:
-        sample = file.read()
+        sample = file.read(1024)
+        file.seek(0)
         if not sample.strip():
             raise ValueError("CSV пустой")
-        file.seek(0)
         try:
             dialect = csv.Sniffer().sniff(sample, delimiters=",;")
         except csv.Error:
@@ -44,7 +44,7 @@ def csv_to_xlsx(csv_path: str, xlsx_path: str) -> None:
     workbook.save(target)
 
 def main():
-    csv_to_xlsx("data/lab05/samples/people.csv", "data/lab05/out/people.xlsx")
+    csv_to_xlsx("data/lab05/samples/cities.csv", "data/lab05/out/cities.xlsx")
 
 if __name__ == "__main__":
     main()

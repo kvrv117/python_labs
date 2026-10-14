@@ -1,7 +1,7 @@
 import csv
 import json
 from pathlib import Path
-from src.lab04.io_txt_csv import ensure_parent_dir
+from src.lab04.io_txt_csv import ensure_parent_dir, write_csv
 
 
 def check_ext(path: str | Path, expected: str) -> Path:
@@ -20,7 +20,7 @@ def json_to_csv(json_path: str, csv_path: str) -> None:
     """
     source = check_ext(json_path, ".json")
     target = check_ext(csv_path, ".csv")
-    ensure_parent_dir(csv_path)
+    ensure_parent_dir(target)
 
     with source.open("r", encoding="utf-8") as file:
         try:
@@ -53,6 +53,7 @@ def json_to_csv(json_path: str, csv_path: str) -> None:
             writer.writerow({key: item.get(key, "") for key in fieldnames})
 
 
+
 def csv_to_json(csv_path: str, json_path: str) -> None:
     """Преобразует CSV в JSON — список словарей со строковыми значениями."""
     source = check_ext(csv_path, ".csv")
@@ -60,14 +61,16 @@ def csv_to_json(csv_path: str, json_path: str) -> None:
     ensure_parent_dir(json_path)
 
     with source.open("r", newline="", encoding="utf-8") as file:
-        sample = file.read()
+        sample = file.read(1024)
+        file.seek(0)
+
         if not sample.strip():
             raise ValueError("CSV пустой")
-        file.seek(0)
         try:
             dialect = csv.Sniffer().sniff(sample, delimiters=",;")
         except csv.Error:
             dialect = csv.excel
+        
         reader = csv.DictReader(file, dialect=dialect)
         if not reader.fieldnames:
             raise ValueError("CSV должен содержать заголовок")
@@ -78,7 +81,6 @@ def csv_to_json(csv_path: str, json_path: str) -> None:
 
 def main():
     json_to_csv("data/lab05/samples/people.json", "data/lab05/out/people_from_json.csv")
-    csv_to_json("data/lab05/samples/people.csv", "data/lab05/out/people_from_csv.json")
 
 if __name__ == "__main__":
     main()
