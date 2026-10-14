@@ -76,11 +76,14 @@ def csv_to_json(csv_path: str, json_path: str) -> None:
             raise ValueError("CSV должен содержать заголовок")
         rows = list(reader)
 
+        rows = [{k:row[k] for k in row if row[k] != ""} for row in rows]
+            
+
     with target.open("w", newline="", encoding="utf-8") as file:
         json.dump(rows, file, ensure_ascii=False, indent=2)
 
 def main():
-    json_to_csv("data/lab05/samples/people.json", "data/lab05/out/people_from_json.csv")
+    csv_to_json("data/lab05/samples/teachers.csv", "data/lab05/out/teachers_from_csv.json")
 
 if __name__ == "__main__":
     main()

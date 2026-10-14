@@ -23,6 +23,8 @@ def json_to_csv(json_path: str, csv_path: str) -> None:
     Кодировка UTF-8. Порядок колонок — как в первом объекте или алфавитный (указать в README).
     """
     source = check_ext(json_path, ".json")
+    target = check_ext(csv_path, ".csv")
+    ensure_parent_dir(target)
 
     with source.open("r", encoding="utf-8") as file:
         try:
@@ -48,11 +50,12 @@ def json_to_csv(json_path: str, csv_path: str) -> None:
     if not fieldnames:
         raise ValueError("В JSON отсутствуют поля для CSV")
 
-    rows = []
-    for item in data:
-        rows.append({key: item.get(key, "") for key in fieldnames})
+    with target.open("w", newline="", encoding="utf-8") as file:
+        writer = csv.DictWriter(file, fieldnames=fieldnames, extrasaction="raise")
+        writer.writeheader()
+        for item in data:
+            writer.writerow({key: item.get(key, "") for key in fieldnames})
 
-    write_csv(rows, csv_path, fieldnames)
 
 
 def csv_to_json(csv_path: str, json_path: str) -> None:
@@ -76,6 +79,9 @@ def csv_to_json(csv_path: str, json_path: str) -> None:
         if not reader.fieldnames:
             raise ValueError("CSV должен содержать заголовок")
         rows = list(reader)
+
+        rows = [{k:row[k] for k in row if row[k] != ""} for row in rows]
+            
 
     with target.open("w", newline="", encoding="utf-8") as file:
         json.dump(rows, file, ensure_ascii=False, indent=2)
@@ -128,6 +134,7 @@ def csv_to_xlsx(csv_path: str, xlsx_path: str) -> None:
 
 json_csv.py
 ``` python
+def main():
     json_to_csv("data/lab05/samples/people.json", "data/lab05/out/people_from_json.csv")
     csv_to_json("data/lab05/samples/people.csv", "data/lab05/out/people_from_csv.json")
 
@@ -274,6 +281,53 @@ people_from_csv.json
     "name": "Andrey",
     "age": "27",
     "city": "Novosibirsk"
+  }
+]
+```
+
+teachers.csv
+```
+name;age;e-mail;number
+Alice;35;alice@mail.ru;
+Bob;36;;+791231231231
+Jack;42;;+7676767676767
+Jessica;67;jessica@mail.ru;
+Elena;25;elena@mail.ru;
+John;36;;+812347712666
+```
+
+teachers_from_csv.json
+``` json
+[
+  {
+    "name": "Alice",
+    "age": "35",
+    "e-mail": "alice@mail.ru"
+  },
+  {
+    "name": "Bob",
+    "age": "36",
+    "number": "+791231231231"
+  },
+  {
+    "name": "Jack",
+    "age": "42",
+    "number": "+7676767676767"
+  },
+  {
+    "name": "Jessica",
+    "age": "67",
+    "e-mail": "jessica@mail.ru"
+  },
+  {
+    "name": "Elena",
+    "age": "25",
+    "e-mail": "elena@mail.ru"
+  },
+  {
+    "name": "John",
+    "age": "36",
+    "number": "+812347712666"
   }
 ]
 ```
