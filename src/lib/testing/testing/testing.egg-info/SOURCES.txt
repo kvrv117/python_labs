@@ -1,0 +1,7 @@
+pyproject.toml
+src/__init__.py
+src/test.py
+src/testing.egg-info/PKG-INFO
+src/testing.egg-info/SOURCES.txt
+src/testing.egg-info/dependency_links.txt
+src/testing.egg-info/top_level.txt
