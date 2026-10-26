@@ -1,9 +1,9 @@
 import sys
-from text_utils import *
+from src.lab03.text import count_freq, top_n, tokenize, normalize
 
-def print_stats(tokens: list[str], is_table: bool = True) -> None:
+def print_stats(tokens: list[str], is_table: bool = True, n : int = 5) -> None:
     freq = count_freq(tokens)
-    top = top_n(freq, 5)
+    top = top_n(freq, n)
 
     print(f"Всего слов: {len(tokens)}")
     print(f"Уникальных слов: {len(freq)}")
