@@ -163,6 +163,7 @@ out/people.json
 ```
 
 out/people.xlsx
+
 ![](../../images/lab06/img04.png)
 
 ### --help
