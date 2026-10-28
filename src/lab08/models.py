@@ -127,3 +127,15 @@ def update_student(rec: dict, **fields) -> dict:
 
     validate_student(new_data)
     return new_data
+
+def main():
+    student = make_student("Ковров Андрей Владимирович", "2008-04-16", "БИВТ-26-6-5", 4.9)
+    print(student)
+
+    try:
+        student = make_student("Далевич Владислав", "2008-02-30", "БИВТ-26-6-4", 4.9)
+    except ValueError as e:
+        print(f"Ошибка: {e}")
+
+if __name__ == "__main__":
+    main()

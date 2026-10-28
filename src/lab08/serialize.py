@@ -1,6 +1,6 @@
 import json
 import os
-from src.lab08.models import student_to_dict, student_from_dict
+from src.lab08.models import student_to_dict, student_from_dict, make_student
 
 
 def students_to_json(students: list[dict], path: str) -> None:
@@ -49,3 +49,17 @@ def students_from_json(path: str) -> list[dict]:
             print(f" - {reason}")
             
     return valid_students
+
+def main():
+    input_path = "data/lab08/samples/students_input.json"
+    bad_path = "data/lab08/samples/students_bad.json"
+    out_path = "data/lab08/out/students_out.json"
+
+    loaded = students_from_json(input_path)
+    loaded.append(make_student("Ковров Андрей Владимирович", "2008-04-16", "БИВТ-26-6-5", 4.9))
+    students_to_json(loaded, out_path)
+
+    students_from_json(bad_path)
+
+if __name__ == "__main__":
+    main()
