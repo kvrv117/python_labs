@@ -12,11 +12,9 @@ def cat(input_path : str, n : bool) -> None:
         with open(p, 'r', encoding='utf-8') as file:
             lines = file.readlines();
     except FileNotFoundError:
-        print(f"Ошибка: файл не найден: {p}", file=sys.stderr)
-        sys.exit(1)
+        print(f"Ошибка: файл не найден: {p}")
     except UnicodeDecodeError:
-        print(f"Ошибка: не удалось прочитать файл {p} в кодировке UTF-8", file=sys.stderr)
-        sys.exit(1)
+        print(f"Ошибка: не удалось прочитать файл {p} в кодировке UTF-8")
 
     for i in range(len(lines)):
         if n:
@@ -31,11 +29,9 @@ def stats(input_path : str, top : int) -> None:
         with open(p, 'r', encoding='utf-8') as file:
             print_stats(tokenize(normalize(file.read())), n=top)
     except FileNotFoundError:
-            print(f"Ошибка: файл не найден: {p}", file=sys.stderr)
-            sys.exit(1)
+            print(f"Ошибка: файл не найден: {p}")
     except UnicodeDecodeError:
-        print(f"Ошибка: не удалось прочитать файл {p} в кодировке UTF-8", file=sys.stderr)
-        sys.exit(1)
+        print(f"Ошибка: не удалось прочитать файл {p} в кодировке UTF-8")
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="CLI‑утилиты лабораторной №6")
