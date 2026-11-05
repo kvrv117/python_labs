@@ -1,6 +1,6 @@
 def linear_search(nums, x) -> int:
     """
-    Линейный поиск. nums - любой
+        Линейный поиск. nums - любой
     """
     for i in range(len(nums)):
         if nums[i] == x:
@@ -9,7 +9,7 @@ def linear_search(nums, x) -> int:
 
 def binary_search(sorted_nums, x) -> int:
     """
-    Бинарный поиск, работает только на отсортированном массиве
+        Бинарный поиск, работает только на отсортированном массиве
     """
     if len(sorted_nums) == 0:
         return -1
@@ -37,7 +37,7 @@ def two_sum_brute(nums, target) -> tuple[int, int] | None:
 
 def two_sum_fast(nums, target) -> tuple[int, int] | None:
     """
-    Ищет элементы, которые в сумме дают target, через словарь
+        Ищет элементы, которые в сумме дают target, через словарь
     """
     seen = {}
     for i in range(len(nums)):

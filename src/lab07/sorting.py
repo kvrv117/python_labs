@@ -23,7 +23,7 @@ def insertion_sort(nums):
     """
     if len(nums) <= 1:
         return nums
-    
+
     output = nums.copy()
 
     for i in range(1, len(output)):

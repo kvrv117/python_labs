@@ -1,5 +1,4 @@
 import argparse
-import sys
 from pathlib import Path
 from src.lab03.text_stats import print_stats
 from src.lab03.text import tokenize, normalize
@@ -24,7 +23,6 @@ def cat(input_path : str, n : bool) -> None:
 
 def stats(input_path : str, top : int) -> None:
     p = Path(input_path)
-
     try:
         with open(p, 'r', encoding='utf-8') as file:
             print_stats(tokenize(normalize(file.read())), n=top)

@@ -27,7 +27,13 @@ def make_student(fio: str, birthdate: str, group: str, gpa: float) -> dict:
         raise ValueError(f"Дата рождения не может быть в будущем: '{birthdate}'.")
 
     if not isinstance(gpa, (int, float)):
-        raise ValueError("GPA должен быть числом (int или float).")
+        if isinstance(gpa, str):
+            try:
+                gpa = float(gpa)
+            except:
+                raise ValueError(f"GPA не переводится во float.")
+        else:
+            raise ValueError(f"GPA должен быть числом (int или float). Получено: {type(gpa)}.")
     
     gpa_float = float(gpa)
     if not (0.0 <= gpa_float <= 5.0):
@@ -48,7 +54,7 @@ def validate_student(rec: dict) -> None:
     
     if set(rec.keys()) != set(STUDENT_FIELDS):
         raise ValueError(f"Неверный набор ключей. Ожидается: {STUDENT_FIELDS}, получено: {tuple(rec.keys())}.")
-
+    
     make_student(rec["fio"], rec["birthdate"], rec["group"], rec["gpa"])
 
 
